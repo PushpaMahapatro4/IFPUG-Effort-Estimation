@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IFPUG Function Point Calculator with Complexity</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            max-width: 700px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>IFPUG Function Point Calculator with Complexity</h1>
+<form id="fpCalculator">
+    <label for="inputs">Number of Inputs (EI):</label>
+    <input type="number" id="inputs" min="0" required>
+
+    <label for="inputComplexity">Input Complexity:</label>
+    <select id="inputComplexity">
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+    </select>
+
+    <label for="outputs">Number of Outputs (EO):</label>
+    <input type="number" id="outputs" min="0" required>
+
+    <label for="outputComplexity">Output Complexity:</label>
+    <select id="outputComplexity">
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+    </select>
+
+    <label for="inquiries">Number of Inquiries (EQ):</label>
+    <input type="number" id="inquiries" min="0" required>
+
+    <label for="inquiryComplexity">Inquiry Complexity:</label>
+    <select id="inquiryComplexity">
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+    </select>
+
+    <label for="files">Number of Files (ILF):</label>
+    <input type="number" id="files" min="0" required>
+
+    <label for="fileComplexity">File Complexity:</label>
+    <select id="fileComplexity">
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+    </select>
+
+    <label for="interfaces">Number of Interfaces (EIF):</label>
+    <input type="number" id="interfaces" min="0" required>
+
+    <label for="interfaceComplexity">Interface Complexity:</label>
+    <select id="interfaceComplexity">
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+    </select>
+
+    <button type="button" onclick="calculateFunctionPoints()">Calculate</button>
+
+    <div id="result"></div>
+</form>
+
+<script>
+    function calculateFunctionPoints() {
+        const inputs = parseInt(document.getElementById('inputs').value);
+        const outputs = parseInt(document.getElementById('outputs').value);
+        const inquiries = parseInt(document.getElementById('inquiries').value);
+        const files = parseInt(document.getElementById('files').value);
+        const interfaces = parseInt(document.getElementById('interfaces').value);
+
+        const inputComplexity = document.getElementById('inputComplexity').value;
+        const outputComplexity = document.getElementById('outputComplexity').value;
+        const inquiryComplexity = document.getElementById('inquiryComplexity').value;
+        const fileComplexity = document.getElementById('fileComplexity').value;
+        const interfaceComplexity = document.getElementById('interfaceComplexity').value;
+
+        // Weights based on complexity levels
+        const weights = {
+            inputs: { low: 3, medium: 4, high: 6 },
+            outputs: { low: 4, medium: 5, high: 7 },
+            inquiries: { low: 3, medium: 4, high: 6 },
+            files: { low: 7, medium: 10, high: 15 },
+            interfaces: { low: 5, medium: 7, high: 10 }
+        };
+
+        // Calculate unadjusted function points
+        const ufp = (inputs * weights.inputs[inputComplexity]) +
+                    (outputs * weights.outputs[outputComplexity]) +
+                    (inquiries * weights.inquiries[inquiryComplexity]) +
+                    (files * weights.files[fileComplexity]) +
+                    (interfaces * weights.interfaces[interfaceComplexity]);
+
+        document.getElementById('result').innerHTML = `Unadjusted Function Points (UFP): ${ufp}`;
+    }
+</script>
+
+</body>
+</html>
